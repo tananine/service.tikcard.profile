@@ -86,7 +86,7 @@ const removeProfile = (req, res, next) => {
 
 const getInformation = (req, res, next) => {
   const accountId = req.account.id;
-  const profileId = req.params.profileId;
+  const profileId = req.headers.profile;
   db.Profile.findOne({
     where: { id: profileId, accountId: accountId },
     include: { model: db.Info },
@@ -116,7 +116,7 @@ const getInformation = (req, res, next) => {
 
 const updateInformation = async (req, res, next) => {
   const accountId = req.account.id;
-  const profileId = req.params.profileId;
+  const profileId = req.headers.profile;
 
   const profileName = req.body.profileName;
   const name = req.body.name;
