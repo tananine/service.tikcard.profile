@@ -7,11 +7,7 @@ const router = express.Router();
 router.get('/', authen, profileControllers.getProfileSoft);
 router.post('/', authen, profileControllers.addProfile);
 router.delete('/:profileId', authen, profileControllers.removeProfile);
-router.get('/Information/:profileId', authen, profileControllers.getInformation);
-router.put(
-  '/Information/:profileId',
-  authen,
-  profileControllers.updateInformation
-);
+router.get('/Information', authen, profileControllers.getInformation);
+router.put('/Information', authen, profileControllers.updateInformation);
 
 module.exports = router;
