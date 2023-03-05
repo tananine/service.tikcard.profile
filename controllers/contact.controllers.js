@@ -108,7 +108,7 @@ const updateContact = (req, res, next) => {
 const deleteContact = (req, res, next) => {
   const accountId = req.account.id;
   const profileId = req.headers.profile;
-  const contactId = req.body.contactId;
+  const contactId = req.params.contactId;
 
   db.Profile.findOne({ where: { id: profileId, accountId: accountId } })
     .then(async (profile) => {
