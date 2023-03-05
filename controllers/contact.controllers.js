@@ -13,7 +13,7 @@ const getContactList = (req, res, next) => {
 
 const getMyContact = (req, res, next) => {
   const accountId = req.account.id;
-  const profileId = req.params.profileId;
+  const profileId = req.headers.profile;
 
   db.Contact.findAll({
     where: { profileId: profileId },
@@ -36,7 +36,7 @@ const getMyContact = (req, res, next) => {
 
 const addContact = (req, res, next) => {
   const accountId = req.account.id;
-  const profileId = req.headers.profileId;
+  const profileId = req.headers.profile;
   const contactItemId = req.body.contactItemId;
   const urlUnique = req.body.urlUnique;
 
@@ -65,7 +65,7 @@ const addContact = (req, res, next) => {
 
 const updateContact = (req, res, next) => {
   const accountId = req.account.id;
-  const profileId = req.headers.profileId;
+  const profileId = req.headers.profile;
   const contactId = req.body.contactId;
   const urlUnique = req.body.urlUnique;
 
@@ -107,7 +107,7 @@ const updateContact = (req, res, next) => {
 
 const deleteContact = (req, res, next) => {
   const accountId = req.account.id;
-  const profileId = req.headers.profileId;
+  const profileId = req.headers.profile;
   const contactId = req.body.contactId;
 
   db.Profile.findOne({ where: { id: profileId, accountId: accountId } })
@@ -142,7 +142,7 @@ const deleteContact = (req, res, next) => {
 
 const toggleEnable = (req, res, next) => {
   const accountId = req.account.id;
-  const profileId = req.headers.profileId;
+  const profileId = req.headers.profile;
   const contactId = req.body.contactId;
 
   db.Profile.findOne({ where: { id: profileId, accountId: accountId } })
