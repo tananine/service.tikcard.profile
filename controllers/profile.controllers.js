@@ -70,14 +70,8 @@ const removeProfile = (req, res, next) => {
     where: { id: profileId, accountId: accountId },
     include: { model: db.Info },
   })
-    .then((isDestroy) => {
-      if (isDestroy) {
-        return res.status(200).json({ message: 'ลบสำเร็จ' });
-      }
-      throwError(404, 'ไม่พบข้อมูล', {
-        accountId: accountId,
-        profileId: profileId,
-      });
+    .then(() => {
+      return res.status(200).json({ message: 'ลบสำเร็จ' });
     })
     .catch((error) => {
       next(error);
@@ -85,28 +79,27 @@ const removeProfile = (req, res, next) => {
 };
 
 const getInformation = (req, res, next) => {
-  const accountId = req.account.id;
   const profileId = req.headers.profile;
-  db.Profile.findOne({
-    where: { id: profileId, accountId: accountId },
-    include: { model: db.Info },
+
+  db.Info.findOne({
+    where: { profileId: profileId },
+    include: { model: db.Profile },
   })
-    .then((profile) => {
-      if (!profile) {
-        throwError(404, 'ไม่พบข้อมูล', {
-          accountId: accountId,
+    .then((info) => {
+      if (!info) {
+        throwError(404, 'ไม่มีข้อมูล Info', {
           profileId: profileId,
         });
       }
-      const Information = profile.Info;
+
       return res.status(200).json({
-        profileName: profile.name,
-        name: Information.name,
-        bio: Information.bio,
-        work: Information.work,
-        company: Information.company,
-        position: Information.position,
-        address: Information.address,
+        profileName: info.Profile.name,
+        name: info.name,
+        bio: info.bio,
+        work: info.work,
+        company: info.company,
+        position: info.position,
+        address: info.address,
       });
     })
     .catch((error) => {
@@ -115,7 +108,6 @@ const getInformation = (req, res, next) => {
 };
 
 const updateInformation = async (req, res, next) => {
-  const accountId = req.account.id;
   const profileId = req.headers.profile;
 
   const profileName = req.body.profileName;
@@ -131,45 +123,35 @@ const updateInformation = async (req, res, next) => {
     return res.status(200).json({ message: 'อัพเดทสำเร็จ' });
   });
 
-  db.Profile.findOne({
-    where: { id: profileId, accountId: accountId },
-  })
-    .then(async (profile) => {
-      if (!profile) {
-        throwError(404, 'ไม่พบข้อมูล', {
-          accountId: accountId,
-          profileId: profileId,
-        });
+  try {
+    await db.Profile.update(
+      {
+        name: profileName,
+      },
+      {
+        where: { id: profileId },
+        transaction: transaction,
       }
-      await db.Profile.update(
-        {
-          name: profileName,
-        },
-        {
-          where: { id: profileId },
-          transaction: transaction,
-        }
-      );
-      await db.Info.update(
-        {
-          name: name,
-          bio: bio,
-          work: work,
-          company: company,
-          position: position,
-          address: address,
-        },
-        {
-          where: { profileId: profileId },
-          transaction: transaction,
-        }
-      );
-      return transaction.commit();
-    })
-    .catch(async (error) => {
-      await transaction.rollback();
-      next(error);
-    });
+    );
+    await db.Info.update(
+      {
+        name: name,
+        bio: bio,
+        work: work,
+        company: company,
+        position: position,
+        address: address,
+      },
+      {
+        where: { profileId: profileId },
+        transaction: transaction,
+      }
+    );
+    transaction.commit();
+  } catch (error) {
+    await transaction.rollback();
+    next(error);
+  }
 };
 
 module.exports = {
