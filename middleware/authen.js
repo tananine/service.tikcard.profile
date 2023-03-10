@@ -1,4 +1,4 @@
-const { throwError } = require('../helpers/throwError');
+const { throwError } = require('../functions/throwError');
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {

@@ -1,4 +1,4 @@
-const { throwError } = require('../helpers/throwError');
+const { throwError } = require('../functions/throwError');
 const db = require('../models/index');
 
 const getProfileSoft = (req, res, next) => {
