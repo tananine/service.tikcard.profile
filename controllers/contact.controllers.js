@@ -1,4 +1,5 @@
 const { throwError } = require('../functions/throwError');
+const { arraySortContact } = require('../functions/arraySortContact');
 const db = require('../models/index');
 
 const getContactList = (req, res, next) => {
@@ -19,7 +20,8 @@ const getMyContact = (req, res, next) => {
     include: [{ model: db.ContactItem }],
   })
     .then((contacts) => {
-      return res.status(200).json(contacts);
+      const sortContacts = arraySortContact(contacts);
+      return res.status(200).json(sortContacts);
     })
     .catch((error) => {
       next(error);
