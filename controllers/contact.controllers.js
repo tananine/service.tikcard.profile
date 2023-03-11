@@ -1,5 +1,6 @@
 const { throwError } = require('../functions/throwError');
 const { arraySortContact } = require('../functions/arraySortContact');
+const { getArrayContact } = require('../functions/getArrayContact');
 const db = require('../models/index');
 
 const getContactList = (req, res, next) => {
@@ -33,11 +34,16 @@ const addContact = async (req, res, next) => {
   const contactItemId = req.body.contactItemId;
   const urlUnique = req.body.urlUnique;
 
+  const contacts = await getArrayContact(profileId);
+  const lastIndexContacts =
+    contacts[contacts.length - 1]?.dataValues.id || null;
+
   try {
     const createContact = await db.Contact.create({
       contactItemId: contactItemId,
       profileId: profileId,
       urlUnique: urlUnique,
+      afterContactId: lastIndexContacts,
     });
     await createContact.save();
     return res.status(200).json('เพิ่มสำเร็จ');
