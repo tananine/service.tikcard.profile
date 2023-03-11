@@ -4,7 +4,9 @@ exports.arraySortContact = (arrayContacts) => {
     return contact.dataValues.afterContactId === null;
   });
 
-  sortArray.push(firstContact);
+  if (firstContact) {
+    sortArray.push(firstContact);
+  }
 
   for (let i = 1; i < arrayContacts.length; i++) {
     const contactAfterLastIndex = arrayContacts.find((contact) => {
