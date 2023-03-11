@@ -5,7 +5,7 @@ const validateProfile = require('../middleware/validateProfile');
 
 const router = express.Router();
 
-router.get('/', authen, validateProfile, contactControllers.getContactList);
+router.get('/', authen, contactControllers.getContactList);
 router.get(
   '/me/list',
   authen,
