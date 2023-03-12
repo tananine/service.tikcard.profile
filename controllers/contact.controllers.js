@@ -81,26 +81,51 @@ const updateContact = (req, res, next) => {
     });
 };
 
-const deleteContact = (req, res, next) => {
+const deleteContact = async (req, res, next) => {
   const profileId = req.headers.profile;
   const contactId = req.params.contactId;
 
-  db.Contact.destroy({
-    where: { id: contactId, profileId: profileId },
-    include: { model: db.Info },
-  })
-    .then((isDestroy) => {
-      if (isDestroy) {
-        return res.status(200).json({ message: 'ลบสำเร็จ' });
+  const transaction = await db.sequelize.transaction();
+  transaction.afterCommit(() => {
+    return res.status(200).json({ message: 'ลบสำเร็จ' });
+  });
+
+  const contacts = await getArrayContact(profileId);
+  const targetIndex = contacts.findIndex(
+    (contact) => contact.dataValues.id === parseInt(contactId)
+  );
+
+  try {
+    if (contacts[targetIndex + 1]) {
+      await db.Contact.update(
+        {
+          afterContactId: contacts[targetIndex].dataValues.afterContactId,
+        },
+        {
+          where: {
+            id: contacts[targetIndex + 1].dataValues.id,
+            profileId: profileId,
+          },
+          transaction: transaction,
+        }
+      );
+    }
+    await db.Contact.destroy({
+      where: { id: contactId, profileId: profileId },
+      transaction: transaction,
+    }).then((isDestroy) => {
+      if (!isDestroy) {
+        throwError(404, 'ไม่พบข้อมูล', {
+          contactId: contactId,
+          profileId: profileId,
+        });
       }
-      throwError(404, 'ไม่พบข้อมูล', {
-        contactId: contactId,
-        profileId: profileId,
-      });
-    })
-    .catch((error) => {
-      next(error);
     });
+    transaction.commit();
+  } catch (error) {
+    await transaction.rollback();
+    next(error);
+  }
 };
 
 const toggleEnable = (req, res, next) => {
