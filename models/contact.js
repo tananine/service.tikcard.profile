@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       });
       this.belongsTo(models.Contact, {
         foreignKey: 'afterContactId',
-        onDelete: 'CASCADE',
       });
     }
   }

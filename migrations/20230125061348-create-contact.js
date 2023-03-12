@@ -44,7 +44,6 @@ module.exports = {
       },
       afterContactId: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
         references: {
           model: 'Contacts',
           key: 'id',
