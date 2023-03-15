@@ -18,6 +18,7 @@ const getProfileSoft = (req, res, next) => {
   db.Profile.findAll({
     where: { accountId: accountId },
     include: { model: db.Info },
+    order: [['createdAt', 'ASC']],
   })
     .then((profiles) => {
       return res.status(200).json(mapData(profiles));
