@@ -157,8 +157,90 @@ const toggleEnable = (req, res, next) => {
     });
 };
 
-const updateSort = (req, res, next) => {
-  return res.status(200).json('Update Sort');
+const updateSort = async (req, res, next) => {
+  const profileId = req.headers.profile;
+  const contactId = req.body.contactId;
+  const afterContactId = parseInt(req.body.afterContactId) || null;
+
+  const transaction = await db.sequelize.transaction();
+  transaction.afterCommit(() => {
+    return res.status(200).json({ message: 'เรียงลำดับสำเร็จ' });
+  });
+
+  const contacts = await getArrayContact(profileId);
+
+  const presentIndex = contacts.findIndex(
+    (contact) => contact.dataValues.id === parseInt(contactId)
+  );
+
+  const targetIndex = contacts.findIndex((contact) => {
+    return contact.dataValues.afterContactId === afterContactId;
+  });
+
+  const updateAfterContactAtPresentIndex = async () => {
+    await db.Contact.update(
+      {
+        afterContactId: afterContactId,
+      },
+      {
+        where: {
+          id: contactId,
+          profileId: profileId,
+        },
+        transaction: transaction,
+      }
+    );
+  };
+
+  const updateAfterContactAtTargetIndex = async () => {
+    await db.Contact.update(
+      {
+        afterContactId: contactId,
+      },
+      {
+        where: {
+          id: contacts[targetIndex].dataValues.id,
+          profileId: profileId,
+        },
+        transaction: transaction,
+      }
+    );
+  };
+
+  const updateAfterContactAtAfterPresentIndex = async () => {
+    await db.Contact.update(
+      {
+        afterContactId: contacts[presentIndex].dataValues.afterContactId,
+      },
+      {
+        where: {
+          id: contacts[presentIndex + 1].dataValues.id,
+          profileId: profileId,
+        },
+        transaction: transaction,
+      }
+    );
+  };
+
+  try {
+    if (contactId === afterContactId) {
+      throwError(400, 'ไม่สามารถ Sort ได้', {
+        contactId: contactId,
+        afterContactId: afterContactId,
+      });
+    }
+    await updateAfterContactAtPresentIndex();
+    if (targetIndex > -1) {
+      await updateAfterContactAtTargetIndex();
+    }
+    if (contacts[presentIndex + 1]) {
+      await updateAfterContactAtAfterPresentIndex();
+    }
+    transaction.commit();
+  } catch (error) {
+    await transaction.rollback();
+    next(error);
+  }
 };
 
 module.exports = {
