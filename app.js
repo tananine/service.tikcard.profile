@@ -4,6 +4,7 @@ const express = require('express');
 const profileRouter = require('./routes/profile.routes');
 const contactRouter = require('./routes/contact.routes');
 const activationRouter = require('./routes/activation.routes');
+const viewRouter = require('./routes/view.routes');
 
 const app = express();
 app.use(bodyParser.json());
@@ -11,6 +12,7 @@ app.use(bodyParser.json());
 app.use('/profile', profileRouter);
 app.use('/contact', contactRouter);
 app.use('/activation', activationRouter);
+app.use('/view', viewRouter);
 
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500;
