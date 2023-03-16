@@ -1,5 +1,4 @@
 const { throwError } = require('../functions/throwError');
-const { arraySortContact } = require('../functions/arraySortContact');
 const { getArrayContact } = require('../functions/getArrayContact');
 const db = require('../models/index');
 
@@ -13,20 +12,15 @@ const getContactList = (req, res, next) => {
     });
 };
 
-const getMyContact = (req, res, next) => {
+const getMyContact = async (req, res, next) => {
   const profileId = req.headers.profile;
 
-  db.Contact.findAll({
-    where: { profileId: profileId },
-    include: [{ model: db.ContactItem }],
-  })
-    .then((contacts) => {
-      const sortContacts = arraySortContact(contacts);
-      return res.status(200).json(sortContacts);
-    })
-    .catch((error) => {
-      next(error);
-    });
+  try {
+    const contacts = await getArrayContact(profileId);
+    return res.status(200).json(contacts);
+  } catch (error) {
+    next(error);
+  }
 };
 
 const addContact = async (req, res, next) => {
