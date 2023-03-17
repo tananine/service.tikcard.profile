@@ -1,5 +1,8 @@
 const { throwError } = require('../functions/throwError');
-const { getArrayContact } = require('../functions/getArrayContact');
+const {
+  getArrayContact,
+  getArrayContactIncludeInfo,
+} = require('../functions/getArrayContact');
 const db = require('../models/index');
 
 const getContactList = (req, res, next) => {
@@ -16,7 +19,7 @@ const getMyContact = async (req, res, next) => {
   const profileId = req.headers.profile;
 
   try {
-    const contacts = await getArrayContact(profileId);
+    const contacts = await getArrayContactIncludeInfo(profileId);
     return res.status(200).json(contacts);
   } catch (error) {
     next(error);

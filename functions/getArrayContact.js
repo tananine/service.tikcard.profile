@@ -14,3 +14,18 @@ exports.getArrayContact = async (profileId) => {
     });
   return contacts;
 };
+
+exports.getArrayContactIncludeInfo = async (profileId) => {
+  const contacts = db.Contact.findAll({
+    where: { profileId: profileId },
+    include: [{ model: db.ContactItem }],
+  })
+    .then((contacts) => {
+      const sortContacts = arraySortContact(contacts);
+      return sortContacts;
+    })
+    .catch((error) => {
+      throw error;
+    });
+  return contacts;
+};
