@@ -28,11 +28,10 @@ const addContact = async (req, res, next) => {
   const contactItemId = req.body.contactItemId;
   const urlUnique = req.body.urlUnique;
 
-  const contacts = await getArrayContact(profileId);
-  const lastIndexContacts =
-    contacts[contacts.length - 1]?.dataValues.id || null;
-
   try {
+    const contacts = await getArrayContact(profileId);
+    const lastIndexContacts =
+      contacts[contacts.length - 1]?.dataValues.id || null;
     const createContact = await db.Contact.create({
       contactItemId: contactItemId,
       profileId: profileId,
@@ -84,12 +83,11 @@ const deleteContact = async (req, res, next) => {
     return res.status(200).json({ message: 'ลบสำเร็จ' });
   });
 
-  const contacts = await getArrayContact(profileId);
-  const targetIndex = contacts.findIndex(
-    (contact) => contact.dataValues.id === parseInt(contactId)
-  );
-
   try {
+    const contacts = await getArrayContact(profileId);
+    const targetIndex = contacts.findIndex(
+      (contact) => contact.dataValues.id === parseInt(contactId)
+    );
     if (contacts[targetIndex + 1]) {
       await db.Contact.update(
         {
@@ -161,62 +159,62 @@ const updateSort = async (req, res, next) => {
     return res.status(200).json({ message: 'เรียงลำดับสำเร็จ' });
   });
 
-  const contacts = await getArrayContact(profileId);
-
-  const presentIndex = contacts.findIndex(
-    (contact) => contact.dataValues.id === parseInt(contactId)
-  );
-
-  const targetIndex = contacts.findIndex((contact) => {
-    return contact.dataValues.afterContactId === afterContactId;
-  });
-
-  const updateAfterContactAtPresentIndex = async () => {
-    await db.Contact.update(
-      {
-        afterContactId: afterContactId,
-      },
-      {
-        where: {
-          id: contactId,
-          profileId: profileId,
-        },
-        transaction: transaction,
-      }
-    );
-  };
-
-  const updateAfterContactAtTargetIndex = async () => {
-    await db.Contact.update(
-      {
-        afterContactId: contactId,
-      },
-      {
-        where: {
-          id: contacts[targetIndex].dataValues.id,
-          profileId: profileId,
-        },
-        transaction: transaction,
-      }
-    );
-  };
-
-  const updateAfterContactAtAfterPresentIndex = async () => {
-    await db.Contact.update(
-      {
-        afterContactId: contacts[presentIndex].dataValues.afterContactId,
-      },
-      {
-        where: {
-          id: contacts[presentIndex + 1].dataValues.id,
-          profileId: profileId,
-        },
-        transaction: transaction,
-      }
-    );
-  };
-
   try {
+    const contacts = await getArrayContact(profileId);
+
+    const presentIndex = contacts.findIndex(
+      (contact) => contact.dataValues.id === parseInt(contactId)
+    );
+
+    const targetIndex = contacts.findIndex((contact) => {
+      return contact.dataValues.afterContactId === afterContactId;
+    });
+
+    const updateAfterContactAtPresentIndex = async () => {
+      await db.Contact.update(
+        {
+          afterContactId: afterContactId,
+        },
+        {
+          where: {
+            id: contactId,
+            profileId: profileId,
+          },
+          transaction: transaction,
+        }
+      );
+    };
+
+    const updateAfterContactAtTargetIndex = async () => {
+      await db.Contact.update(
+        {
+          afterContactId: contactId,
+        },
+        {
+          where: {
+            id: contacts[targetIndex].dataValues.id,
+            profileId: profileId,
+          },
+          transaction: transaction,
+        }
+      );
+    };
+
+    const updateAfterContactAtAfterPresentIndex = async () => {
+      await db.Contact.update(
+        {
+          afterContactId: contacts[presentIndex].dataValues.afterContactId,
+        },
+        {
+          where: {
+            id: contacts[presentIndex + 1].dataValues.id,
+            profileId: profileId,
+          },
+          transaction: transaction,
+        }
+      );
+    };
+
     if (contactId === afterContactId) {
       throwError(400, 'ไม่สามารถ Sort ได้', {
         contactId: contactId,
