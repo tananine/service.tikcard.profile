@@ -153,7 +153,7 @@ const toggleEnable = (req, res, next) => {
 
 const updateSort = async (req, res, next) => {
   const profileId = req.headers.profile;
-  const contactId = req.body.contactId;
+  const contactId = parseInt(req.body.contactId);
   const afterContactId = parseInt(req.body.afterContactId) || null;
 
   const transaction = await db.sequelize.transaction();
