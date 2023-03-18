@@ -4,20 +4,19 @@ const db = require('../models/index');
 
 const getViewProfile = async (req, res, next) => {
   const profileId = req.params.profileId;
-  let profile = null;
+  let info = null;
   let contacts = [];
 
-  await db.Profile.findOne({
-    where: { id: profileId },
-    include: { model: db.Info },
+  await db.Info.findOne({
+    where: { profileId: profileId },
   })
-    .then((profileData) => {
-      if (!profileData) {
-        throwError(404, 'ไม่มีพบ Profile', {
+    .then((infoData) => {
+      if (!infoData) {
+        throwError(404, 'ไม่พบ Info', {
           profileId: profileId,
         });
       }
-      profile = profileData;
+      info = infoData;
     })
     .catch((error) => {
       next(error);
