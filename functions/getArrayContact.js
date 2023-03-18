@@ -15,7 +15,7 @@ exports.getArrayContact = async (profileId) => {
   return contacts;
 };
 
-exports.getArrayContactIncludeInfo = async (profileId) => {
+exports.getArrayContactIncludeContactItem = async (profileId) => {
   const contacts = db.Contact.findAll({
     where: { profileId: profileId },
     include: [{ model: db.ContactItem }],
