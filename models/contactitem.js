@@ -11,9 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   ContactItem.init(
     {
       name: DataTypes.STRING,
-      app: DataTypes.STRING,
-      url: DataTypes.STRING,
-      type: DataTypes.STRING,
+      defaultUrl: DataTypes.STRING,
     },
     {
       sequelize,

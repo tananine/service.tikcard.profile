@@ -30,17 +30,11 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
       },
-      urlUnique: {
+      url: {
         type: Sequelize.STRING,
       },
-      type: {
-        type: Sequelize.STRING,
-      },
-      status: {
+      show: {
         type: Sequelize.ENUM('enable', 'disable'),
-      },
-      theme: {
-        type: Sequelize.STRING,
       },
       afterContactId: {
         type: Sequelize.INTEGER,

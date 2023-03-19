@@ -21,10 +21,8 @@ module.exports = (sequelize, DataTypes) => {
       contactItemId: DataTypes.INTEGER,
       profileId: DataTypes.INTEGER,
       name: DataTypes.STRING,
-      urlUnique: DataTypes.STRING,
-      type: DataTypes.STRING,
-      status: DataTypes.ENUM('enable', 'disable'),
-      theme: DataTypes.STRING,
+      url: DataTypes.STRING,
+      show: DataTypes.ENUM('enable', 'disable'),
       afterContactId: DataTypes.INTEGER,
     },
     {

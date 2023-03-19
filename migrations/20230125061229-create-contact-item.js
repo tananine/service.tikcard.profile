@@ -12,13 +12,7 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
       },
-      app: {
-        type: Sequelize.STRING,
-      },
-      url: {
-        type: Sequelize.STRING,
-      },
-      type: {
+      defaultUrl: {
         type: Sequelize.STRING,
       },
       createdAt: {
