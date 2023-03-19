@@ -11,7 +11,11 @@ module.exports = (sequelize, DataTypes) => {
   ContactItem.init(
     {
       name: DataTypes.STRING,
-      defaultUrl: DataTypes.STRING,
+      defaultUri: DataTypes.STRING,
+      androidUri: DataTypes.STRING,
+      iosUri: DataTypes.STRING,
+      example: DataTypes.STRING,
+      imageIcon: DataTypes.STRING,
     },
     {
       sequelize,
