@@ -5,6 +5,11 @@ const validateProfile = require('../middleware/validateProfile');
 
 const router = express.Router();
 
-router.get('/:profileId', viewControllers.getViewProfile);
+router.get(
+  '/:profileId',
+  authen,
+  validateProfile,
+  viewControllers.getViewProfile
+);
 
 module.exports = router;
