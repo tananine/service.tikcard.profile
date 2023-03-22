@@ -15,6 +15,12 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
       },
+      linkId: {
+        type: Sequelize.STRING,
+      },
+      show: {
+        type: Sequelize.ENUM('enable', 'disable'),
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
