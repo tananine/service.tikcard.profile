@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   Activation.init(
     {
-      accountId: DataTypes.NUMBER,
-      primary: DataTypes.NUMBER,
-      secondary: DataTypes.NUMBER,
+      accountId: DataTypes.INTEGER,
+      primary: DataTypes.INTEGER,
+      secondary: DataTypes.INTEGER,
     },
     {
       sequelize,

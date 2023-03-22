@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Profile.init(
     {
-      accountId: DataTypes.NUMBER,
+      accountId: DataTypes.INTEGER,
       name: DataTypes.STRING,
     },
     {
