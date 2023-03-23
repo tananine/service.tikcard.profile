@@ -26,15 +26,19 @@ const setPrimaryProfile = (req, res, next) => {
   db.Activation.update(
     { primary: profileId },
     { where: { accountId: accountId } }
-  ).then((isUpdate) => {
-    if (!isUpdate[0]) {
-      throwError(400, 'อัพเดทไม่สำเร็จ', {
-        accountId: accountId,
-        profileId: profileId,
-      });
-    }
-    return res.status(200).json({ message: 'อัพเดทสำเร็จ' });
-  });
+  )
+    .then((isUpdate) => {
+      if (!isUpdate[0]) {
+        throwError(400, 'อัพเดทไม่สำเร็จ', {
+          accountId: accountId,
+          profileId: profileId,
+        });
+      }
+      return res.status(200).json({ message: 'อัพเดทสำเร็จ' });
+    })
+    .catch((error) => {
+      next(error);
+    });
 };
 
 const setSecondaryProfile = (req, res, next) => {
@@ -44,15 +48,19 @@ const setSecondaryProfile = (req, res, next) => {
   db.Activation.update(
     { secondary: profileId },
     { where: { accountId: accountId } }
-  ).then((isUpdate) => {
-    if (!isUpdate[0]) {
-      throwError(400, 'อัพเดทไม่สำเร็จ', {
-        accountId: accountId,
-        profileId: profileId,
-      });
-    }
-    return res.status(200).json({ message: 'อัพเดทสำเร็จ' });
-  });
+  )
+    .then((isUpdate) => {
+      if (!isUpdate[0]) {
+        throwError(400, 'อัพเดทไม่สำเร็จ', {
+          accountId: accountId,
+          profileId: profileId,
+        });
+      }
+      return res.status(200).json({ message: 'อัพเดทสำเร็จ' });
+    })
+    .catch((error) => {
+      next(error);
+    });
 };
 
 module.exports = {
