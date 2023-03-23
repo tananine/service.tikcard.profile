@@ -50,7 +50,22 @@ const updateLink = (req, res, next) => {
     });
 };
 
+const getLink = (req, res, next) => {
+  const profileId = req.headers.profile;
+
+  db.Profile.findOne({ where: { id: profileId } })
+    .then((profile) => {
+      return res
+        .status(200)
+        .json({ linkId: profile.linkId, show: profile.show });
+    })
+    .catch((error) => {
+      next(error);
+    });
+};
+
 module.exports = {
   useLink,
   updateLink,
+  getLink,
 };

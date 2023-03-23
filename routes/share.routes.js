@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.get('/link/:linkId', shareControllers.useLink);
 router.post('/update', authen, validateProfile, shareControllers.updateLink);
+router.get('/get', authen, validateProfile, shareControllers.getLink);
 
 module.exports = router;
