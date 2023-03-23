@@ -31,6 +31,26 @@ const useLink = async (req, res, next) => {
   }
 };
 
+const updateLink = (req, res, next) => {
+  const profileId = req.headers.profile;
+  const linkId = req.body.linkId;
+
+  db.Profile.update({ linkId: linkId }, { where: { id: profileId } })
+    .then((isUpdate) => {
+      if (!isUpdate[0]) {
+        throwError(400, 'อัพเดทไม่สำเร็จ', {
+          profileId: profileId,
+          linkId: linkId,
+        });
+      }
+      return res.status(200).json({ message: 'อัพเดทสำเร็จ' });
+    })
+    .catch((error) => {
+      next(error);
+    });
+};
+
 module.exports = {
   useLink,
+  updateLink,
 };
