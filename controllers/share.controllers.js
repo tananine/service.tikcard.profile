@@ -64,8 +64,66 @@ const getLink = (req, res, next) => {
     });
 };
 
+const getPrimaryLink = (req, res, next) => {
+  const accountId = req.account.id;
+
+  db.Activation.findOne({
+    where: { accountId: accountId },
+    include: [{ model: db.Profile, as: 'profilePrimary' }],
+  })
+    .then((activation) => {
+      if (!activation) {
+        throwError(404, 'ไม่พบข้อมูล', {
+          accountId: accountId,
+        });
+      }
+
+      const linkId = activation.profilePrimary?.linkId;
+      if (linkId) {
+        return res.status(200).json({ linkId: linkId });
+      } else {
+        throwError(404, 'ไม่พบ linkId', {
+          accountId: accountId,
+        });
+      }
+    })
+    .catch((error) => {
+      next(error);
+    });
+};
+
+const getSecondaryLink = (req, res, next) => {
+  const accountId = req.account.id;
+
+  db.Activation.findOne({
+    where: { accountId: accountId },
+    include: [{ model: db.Profile, as: 'profileSecondary' }],
+  })
+    .then((activation) => {
+      if (!activation) {
+        throwError(404, 'ไม่พบข้อมูล', {
+          accountId: accountId,
+        });
+      }
+
+      const linkId = activation.profileSecondary?.linkId;
+      if (linkId) {
+        return res.status(200).json({ linkId: linkId });
+      } else {
+        throwError(404, 'ไม่พบ linkId', {
+          accountId: accountId,
+        });
+      }
+    })
+    .catch((error) => {
+      next(error);
+    });
+};
+
 module.exports = {
   useLink,
   updateLink,
   getLink,
+  getPrimaryLink,
+  getSecondaryLink,
 };
