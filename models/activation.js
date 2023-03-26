@@ -4,10 +4,12 @@ module.exports = (sequelize, DataTypes) => {
   class Activation extends Model {
     static associate(models) {
       this.belongsTo(models.Profile, {
+        as: 'profilePrimary',
         foreignKey: 'primary',
         onDelete: 'CASCADE',
       });
       this.belongsTo(models.Profile, {
+        as: 'profileSecondary',
         foreignKey: 'secondary',
         onDelete: 'CASCADE',
       });
