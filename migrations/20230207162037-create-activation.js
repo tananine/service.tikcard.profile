@@ -17,7 +17,7 @@ module.exports = {
         references: {
           model: 'Profiles',
           key: 'id',
-          as: 'primary',
+          as: 'profilePrimary',
         },
       },
       secondary: {
@@ -25,7 +25,7 @@ module.exports = {
         references: {
           model: 'Profiles',
           key: 'id',
-          as: 'secondary',
+          as: 'profileSecondary',
         },
       },
       createdAt: {
