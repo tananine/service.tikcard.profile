@@ -135,9 +135,9 @@ const toggleEnable = (req, res, next) => {
           profileId: profileId,
         });
       }
-      const status = contact.status === 'enable' ? 'disable' : 'enable';
+      const show = contact.show === 'enable' ? 'disable' : 'enable';
       return db.Contact.update(
-        { status: status },
+        { show: show },
         {
           where: { id: contactId, profileId: profileId },
           returning: true,
