@@ -24,5 +24,6 @@ exports.getView = async (profileId) => {
     });
 
   contacts = await getArrayContactIncludeContactItem(profileId);
+  contacts = contacts.filter((contact) => contact.show === 'enable');
   return { info: info, contacts: contacts };
 };
