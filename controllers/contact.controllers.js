@@ -39,6 +39,7 @@ const addContact = async (req, res, next) => {
       contactItemId: contactItemId,
       profileId: profileId,
       url: url,
+      show: 'enable',
       afterContactId: lastIndexContacts,
     });
     await createContact.save();
