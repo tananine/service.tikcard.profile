@@ -34,7 +34,7 @@ const addContact = async (req, res, next) => {
   try {
     const contacts = await getArrayContact(profileId);
     const lastIndexContacts =
-      contacts[contacts.length - 1]?.dataValues.id || null;
+      contacts[contacts.length - 1].id || null;
     const createContact = await db.Contact.create({
       contactItemId: contactItemId,
       profileId: profileId,
@@ -90,16 +90,16 @@ const deleteContact = async (req, res, next) => {
   try {
     const contacts = await getArrayContact(profileId);
     const targetIndex = contacts.findIndex(
-      (contact) => contact.dataValues.id === parseInt(contactId)
+      (contact) => contact.id === parseInt(contactId)
     );
     if (contacts[targetIndex + 1]) {
       await db.Contact.update(
         {
-          afterContactId: contacts[targetIndex].dataValues.afterContactId,
+          afterContactId: contacts[targetIndex].afterContactId,
         },
         {
           where: {
-            id: contacts[targetIndex + 1].dataValues.id,
+            id: contacts[targetIndex + 1].id,
             profileId: profileId,
           },
           transaction: transaction,
@@ -167,11 +167,11 @@ const updateSort = async (req, res, next) => {
     const contacts = await getArrayContact(profileId);
 
     const presentIndex = contacts.findIndex(
-      (contact) => contact.dataValues.id === parseInt(contactId)
+      (contact) => contact.id === parseInt(contactId)
     );
 
     const targetIndex = contacts.findIndex((contact) => {
-      return contact.dataValues.afterContactId === afterContactId;
+      return contact.afterContactId === afterContactId;
     });
 
     const updateAfterContactAtPresentIndex = async () => {
@@ -196,7 +196,7 @@ const updateSort = async (req, res, next) => {
         },
         {
           where: {
-            id: contacts[targetIndex].dataValues.id,
+            id: contacts[targetIndex].id,
             profileId: profileId,
           },
           transaction: transaction,
@@ -207,11 +207,11 @@ const updateSort = async (req, res, next) => {
     const updateAfterContactAtAfterPresentIndex = async () => {
       await db.Contact.update(
         {
-          afterContactId: contacts[presentIndex].dataValues.afterContactId,
+          afterContactId: contacts[presentIndex].afterContactId,
         },
         {
           where: {
-            id: contacts[presentIndex + 1].dataValues.id,
+            id: contacts[presentIndex + 1].id,
             profileId: profileId,
           },
           transaction: transaction,

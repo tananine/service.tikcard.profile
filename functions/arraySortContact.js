@@ -1,7 +1,7 @@
 exports.arraySortContact = (arrayContacts) => {
   const sortArray = [];
   const firstContact = arrayContacts.find((contact) => {
-    return contact.dataValues.afterContactId === null;
+    return contact.afterContactId === null;
   });
 
   if (firstContact) {
@@ -11,8 +11,8 @@ exports.arraySortContact = (arrayContacts) => {
   for (let i = 1; i < arrayContacts.length; i++) {
     const contactAfterLastIndex = arrayContacts.find((contact) => {
       return (
-        contact.dataValues.afterContactId ===
-        sortArray[sortArray.length - 1].dataValues.id
+        contact.afterContactId ===
+        sortArray[sortArray.length - 1].id
       );
     });
     if (contactAfterLastIndex) {
