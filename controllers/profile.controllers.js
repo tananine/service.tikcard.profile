@@ -57,7 +57,10 @@ const addProfile = async (req, res, next) => {
       { include: { model: db.Info } }
     );
     await createProfile.save();
-    return res.status(200).json({ message: 'สร้าง Profile สำเร็จ' });
+    return res.status(200).json({
+      message: 'สร้าง Profile สำเร็จ',
+      returnData: { id: createProfile.id },
+    });
   } catch (error) {
     next(error);
   }
