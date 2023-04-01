@@ -33,8 +33,7 @@ const addContact = async (req, res, next) => {
 
   try {
     const contacts = await getArrayContact(profileId);
-    const lastIndexContacts =
-      contacts[contacts.length - 1].id || null;
+    const lastIndexContacts = contacts[contacts.length - 1]?.id || null;
     const createContact = await db.Contact.create({
       contactItemId: contactItemId,
       profileId: profileId,
