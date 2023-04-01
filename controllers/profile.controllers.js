@@ -8,7 +8,7 @@ const getProfileSoft = (req, res, next) => {
     array.map((item) => {
       return {
         profileId: item.id,
-        profileName: item.name,
+        cardName: item.name,
         sort: item.sort,
         name: item.Info.name,
         company: item.Info.company,
@@ -31,7 +31,7 @@ const getProfileSoft = (req, res, next) => {
 const addProfile = async (req, res, next) => {
   const accountId = req.account.id;
 
-  const profileName = req.body.profileName;
+  const cardName = req.body.cardName;
   const name = req.body.name;
   const bio = req.body.bio;
   const work = req.body.work;
@@ -43,7 +43,7 @@ const addProfile = async (req, res, next) => {
     const createProfile = await db.Profile.create(
       {
         accountId: accountId,
-        name: profileName,
+        name: cardName,
         status: 'personal',
         Info: {
           name: name,
@@ -97,7 +97,7 @@ const getInformation = (req, res, next) => {
       }
 
       return res.status(200).json({
-        profileName: info.Profile.name,
+        cardName: info.Profile.name,
         name: info.name,
         bio: info.bio,
         work: info.work,
@@ -114,7 +114,7 @@ const getInformation = (req, res, next) => {
 const updateInformation = async (req, res, next) => {
   const profileId = req.headers.profile;
 
-  const profileName = req.body.profileName;
+  const cardName = req.body.cardName;
   const name = req.body.name;
   const bio = req.body.bio;
   const work = req.body.work;
@@ -130,7 +130,7 @@ const updateInformation = async (req, res, next) => {
   try {
     await db.Profile.update(
       {
-        name: profileName,
+        name: cardName,
       },
       {
         where: { id: profileId },
