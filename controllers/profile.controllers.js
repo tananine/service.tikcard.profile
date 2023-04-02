@@ -1,4 +1,5 @@
 const { throwError } = require('../functions/throwError');
+const randomKey = require('random-key');
 const db = require('../models/index');
 
 const getProfileSoft = (req, res, next) => {
@@ -39,11 +40,32 @@ const addProfile = async (req, res, next) => {
   const position = req.body.position;
   const address = req.body.address;
 
+  const randomKeyHandler = () => {
+    return randomKey.generate(7);
+  };
+
+  let linkIdGenerate = randomKeyHandler();
+  let linkIdInUse = false;
+
   try {
+    do {
+      linkIdInUse = false;
+      await db.Profile.findOne({ where: { linkId: linkIdGenerate } }).then(
+        (profile) => {
+          if (profile) {
+            linkIdInUse = true;
+            linkIdGenerate = randomKeyHandler();
+          }
+        }
+      );
+    } while (linkIdInUse);
+
     const createProfile = await db.Profile.create(
       {
         accountId: accountId,
         name: cardName,
+        linkId: linkIdGenerate,
+        show: 'enable',
         Info: {
           name: name,
           bio: bio,
