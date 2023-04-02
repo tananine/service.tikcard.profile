@@ -44,7 +44,6 @@ const addProfile = async (req, res, next) => {
       {
         accountId: accountId,
         name: cardName,
-        status: 'personal',
         Info: {
           name: name,
           bio: bio,
