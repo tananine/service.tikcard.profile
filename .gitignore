@@ -145,3 +145,6 @@ dist
 
 .DS_*
 .vscode
+
+sonar*
+.scannerwork
