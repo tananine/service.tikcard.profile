@@ -1,1 +1,1 @@
-# service.vickq.profile
+# service.tikcard.profile
