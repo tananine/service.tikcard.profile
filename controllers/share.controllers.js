@@ -23,11 +23,13 @@ const useLink = async (req, res, next) => {
       next(error);
     });
 
-  try {
-    const view = await getView(profileId);
-    return res.status(200).json(view);
-  } catch (error) {
-    next(error);
+  if (profileId) {
+    try {
+      const view = await getView(profileId);
+      return res.status(200).json(view);
+    } catch (error) {
+      next(error);
+    }
   }
 };
 
