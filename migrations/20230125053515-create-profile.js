@@ -21,6 +21,9 @@ module.exports = {
       show: {
         type: Sequelize.ENUM('enable', 'disable'),
       },
+      coverImage: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

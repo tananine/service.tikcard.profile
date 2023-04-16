@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       linkId: DataTypes.STRING,
       show: DataTypes.ENUM('enable', 'disable'),
+      coverImage: DataTypes.STRING
     },
     {
       sequelize,

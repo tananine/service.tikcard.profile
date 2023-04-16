@@ -36,6 +36,12 @@ module.exports = {
       address: {
         type: Sequelize.STRING,
       },
+      profileImage: {
+        type: Sequelize.STRING,
+      },
+      companyImage: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
