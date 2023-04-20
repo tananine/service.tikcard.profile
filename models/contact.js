@@ -21,9 +21,11 @@ module.exports = (sequelize, DataTypes) => {
       contactItemId: DataTypes.INTEGER,
       profileId: DataTypes.INTEGER,
       name: DataTypes.STRING,
-      url: DataTypes.STRING,
+      data: DataTypes.STRING,
       show: DataTypes.ENUM('enable', 'disable'),
+      typeState: DataTypes.ENUM('grid', 'block'),
       afterContactId: DataTypes.INTEGER,
+      note: DataTypes.STRING,
     },
     {
       sequelize,

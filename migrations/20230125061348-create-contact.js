@@ -30,11 +30,14 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
       },
-      url: {
+      data: {
         type: Sequelize.STRING,
       },
       show: {
         type: Sequelize.ENUM('enable', 'disable'),
+      },
+      typeState: {
+        type: Sequelize.ENUM('grid', 'block'),
       },
       afterContactId: {
         type: Sequelize.INTEGER,
@@ -43,6 +46,9 @@ module.exports = {
           key: 'id',
           as: 'afterContactId',
         },
+      },
+      note: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

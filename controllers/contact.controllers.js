@@ -29,7 +29,7 @@ const getMyContact = async (req, res, next) => {
 const addContact = async (req, res, next) => {
   const profileId = req.headers.profile;
   const contactItemId = req.body.contactItemId;
-  const url = req.body.url;
+  const data = req.body.data;
 
   try {
     const contacts = await getArrayContact(profileId);
@@ -37,7 +37,7 @@ const addContact = async (req, res, next) => {
     const createContact = await db.Contact.create({
       contactItemId: contactItemId,
       profileId: profileId,
-      url: url,
+      data: data,
       show: 'enable',
       afterContactId: lastIndexContacts,
     });
@@ -51,11 +51,11 @@ const addContact = async (req, res, next) => {
 const updateContact = (req, res, next) => {
   const profileId = req.headers.profile;
   const contactId = req.body.contactId;
-  const url = req.body.url;
+  const data = req.body.data;
 
   db.Contact.update(
     {
-      url: url,
+      data: data,
     },
     {
       where: {
