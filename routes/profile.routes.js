@@ -27,8 +27,8 @@ const upload = multer({
     key: (req, file, cb) => {
       if (file.fieldname === 'profileImage') {
         cb(null, 'uploads/profileImages/' + Date.now().toString());
-      } else if (file.fieldname === 'companyImage') {
-        cb(null, 'uploads/companyImages/' + Date.now().toString());
+      } else if (file.fieldname === 'logoImage') {
+        cb(null, 'uploads/logoImages/' + Date.now().toString());
       } else {
         cb(new Error('Invalid fieldname'));
       }
@@ -42,7 +42,7 @@ router.post(
   authen,
   upload.fields([
     { name: 'profileImage', maxCount: 1 },
-    { name: 'companyImage', maxCount: 1 },
+    { name: 'logoImage', maxCount: 1 },
   ]),
   profileControllers.addProfile
 );
@@ -64,7 +64,7 @@ router.put(
   validateProfile,
   upload.fields([
     { name: 'profileImage', maxCount: 1 },
-    { name: 'companyImage', maxCount: 1 },
+    { name: 'logoImage', maxCount: 1 },
   ]),
   profileControllers.updateInformation
 );

@@ -14,7 +14,7 @@ const getProfileSoft = (req, res, next) => {
         name: item.Info.name,
         company: item.Info.company,
         profileImage: item.Info.profileImage,
-        companyImage: item.Info.companyImage,
+        logoImage: item.Info.logoImage,
       };
     });
 
@@ -43,7 +43,7 @@ const addProfile = async (req, res, next) => {
   const address = req.body.address;
 
   const profileImage = req.files?.['profileImage']?.[0];
-  const companyImage = req.files?.['companyImage']?.[0];
+  const logoImage = req.files?.['logoImage']?.[0];
 
   const randomKeyHandler = () => {
     return randomKey.generate(7);
@@ -79,7 +79,7 @@ const addProfile = async (req, res, next) => {
           position: position,
           address: address,
           profileImage: profileImage?.location,
-          companyImage: companyImage?.location,
+          logoImage: logoImage?.location,
         },
       },
       { include: { model: db.Info } }
@@ -133,7 +133,7 @@ const getInformation = (req, res, next) => {
         position: info.position,
         address: info.address,
         profileImage: info.profileImage,
-        companyImage: info.companyImage,
+        logoImage: info.logoImage,
       });
     })
     .catch((error) => {
@@ -153,7 +153,7 @@ const updateInformation = async (req, res, next) => {
   const address = req.body.address;
 
   const profileImage = req.files?.['profileImage']?.[0];
-  const companyImage = req.files?.['companyImage']?.[0];
+  const logoImage = req.files?.['logoImage']?.[0];
 
   const transaction = await db.sequelize.transaction();
   transaction.afterCommit(() => {
@@ -179,7 +179,7 @@ const updateInformation = async (req, res, next) => {
         position: position,
         address: address,
         profileImage: profileImage?.location,
-        companyImage: companyImage?.location,
+        logoImage: logoImage?.location,
       },
       {
         where: { profileId: profileId },

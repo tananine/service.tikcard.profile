@@ -39,7 +39,7 @@ module.exports = {
       profileImage: {
         type: Sequelize.STRING,
       },
-      companyImage: {
+      logoImage: {
         type: Sequelize.STRING,
       },
       createdAt: {
