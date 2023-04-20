@@ -27,6 +27,9 @@ module.exports = {
       imageIcon: {
         type: Sequelize.STRING,
       },
+      typeLayout: {
+        type: Sequelize.ENUM('grid', 'block'),
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

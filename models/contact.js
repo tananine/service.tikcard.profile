@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       data: DataTypes.STRING,
       show: DataTypes.ENUM('enable', 'disable'),
-      typeState: DataTypes.ENUM('grid', 'block'),
       afterContactId: DataTypes.INTEGER,
       note: DataTypes.STRING,
     },

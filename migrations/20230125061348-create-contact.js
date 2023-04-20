@@ -36,9 +36,6 @@ module.exports = {
       show: {
         type: Sequelize.ENUM('enable', 'disable'),
       },
-      typeState: {
-        type: Sequelize.ENUM('grid', 'block'),
-      },
       afterContactId: {
         type: Sequelize.INTEGER,
         references: {
