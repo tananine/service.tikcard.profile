@@ -29,7 +29,9 @@ const getMyContact = async (req, res, next) => {
 const addContact = async (req, res, next) => {
   const profileId = req.headers.profile;
   const contactItemId = req.body.contactItemId;
+  const name = req.body.name;
   const data = req.body.data;
+  const note = req.body.note;
 
   try {
     const contacts = await getArrayContact(profileId);
@@ -37,9 +39,11 @@ const addContact = async (req, res, next) => {
     const createContact = await db.Contact.create({
       contactItemId: contactItemId,
       profileId: profileId,
+      name: name,
       data: data,
       show: 'enable',
       afterContactId: lastIndexContacts,
+      note: note,
     });
     await createContact.save();
     return res.status(200).json('เพิ่มสำเร็จ');
@@ -51,11 +55,15 @@ const addContact = async (req, res, next) => {
 const updateContact = (req, res, next) => {
   const profileId = req.headers.profile;
   const contactId = req.body.contactId;
+  const name = req.body.name;
   const data = req.body.data;
+  const note = req.body.note;
 
   db.Contact.update(
     {
+      name: name,
       data: data,
+      note: note,
     },
     {
       where: {
