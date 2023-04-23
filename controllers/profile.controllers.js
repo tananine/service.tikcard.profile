@@ -34,13 +34,13 @@ const getProfileSoft = (req, res, next) => {
 const addProfile = async (req, res, next) => {
   const accountId = req.account.id;
 
-  const cardName = req.body.cardName;
-  const name = req.body.name;
-  const bio = req.body.bio;
-  const work = req.body.work;
-  const company = req.body.company;
-  const position = req.body.position;
-  const address = req.body.address;
+  const cardName = req.body.cardName || '';
+  const name = req.body.name || '';
+  const bio = req.body.bio || '';
+  const work = req.body.work || '';
+  const company = req.body.company || '';
+  const position = req.body.position || '';
+  const address = req.body.address || '';
 
   const profileImage = req.files?.['profileImage']?.[0];
   const logoImage = req.files?.['logoImage']?.[0];
