@@ -181,6 +181,14 @@ const updateSort = async (req, res, next) => {
       return contact.afterContactId === afterContactId;
     });
 
+    if (presentIndex === targetIndex) {
+      throwError(400, 'present เท่ากับ target', {
+        profileId: profileId,
+        contactId: contactId,
+        afterContactId: afterContactId,
+      });
+    }
+
     const updateAfterContactAtPresentIndex = async () => {
       await db.Contact.update(
         {
