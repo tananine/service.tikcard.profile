@@ -3,6 +3,7 @@ const db = require('../models/index');
 
 const getProfileActivation = (req, res, next) => {
   const accountId = req.account.id;
+  const email = req.account.email;
   db.Activation.findOne({ where: { accountId: accountId } })
     .then(async (activation) => {
       if (!activation) {
@@ -12,7 +13,12 @@ const getProfileActivation = (req, res, next) => {
         await createActivation.save();
         return res.status(200).json(createActivation);
       }
-      return res.status(200).json(activation);
+      return res.status(200).json({
+        activation: activation,
+        account: {
+          email: email,
+        },
+      });
     })
     .catch((error) => {
       next(error);
