@@ -1,7 +1,7 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Connect extends Model {
+  class Connection extends Model {
     static associate(models) {
       this.belongsTo(models.Profile, {
         foreignKey: 'profileId',
@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  Connect.init(
+  Connection.init(
     {
       profileId: DataTypes.INTEGER,
       name: DataTypes.STRING,
@@ -19,8 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Connect',
+      modelName: 'Connection',
     }
   );
-  return Connect;
+  return Connection;
 };
