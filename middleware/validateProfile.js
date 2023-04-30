@@ -3,7 +3,7 @@ const db = require('../models/index');
 
 module.exports = (req, res, next) => {
   const accountId = req.account.id;
-  const profileId = req.headers.profile || req.params.profileId;
+  const profileId = req.params.profileId || req.headers.profile;
 
   db.Profile.findOne({
     where: { id: profileId, accountId: accountId },
