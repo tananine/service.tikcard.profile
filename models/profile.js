@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Contact, {
         foreignKey: 'profileId',
       });
+      this.hasMany(models.Connection, {
+        foreignKey: 'profileId',
+      });
     }
   }
   Profile.init(
@@ -17,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       linkId: DataTypes.STRING,
       show: DataTypes.ENUM('enable', 'disable'),
-      coverImage: DataTypes.STRING
+      coverImage: DataTypes.STRING,
     },
     {
       sequelize,
