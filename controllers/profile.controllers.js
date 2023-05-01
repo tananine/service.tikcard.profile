@@ -12,6 +12,7 @@ const getProfileSoft = (req, res, next) => {
         cardName: item.name,
         sort: item.sort,
         name: item.Info.name,
+        job: item.Info.job,
         company: item.Info.company,
         profileImage: item.Info.profileImage,
         logoImage: item.Info.logoImage,
@@ -36,11 +37,11 @@ const addProfile = async (req, res, next) => {
 
   const cardName = req.body.cardName || '';
   const name = req.body.name || '';
-  const bio = req.body.bio || '';
-  const work = req.body.work || '';
+  const job = req.body.job || '';
   const company = req.body.company || '';
-  const position = req.body.position || '';
-  const address = req.body.address || '';
+  const bio1 = req.body.bio1 || '';
+  const bio2 = req.body.bio2 || '';
+  const bio3 = req.body.bio3 || '';
 
   const profileImage = req.files?.['profileImage']?.[0];
   const logoImage = req.files?.['logoImage']?.[0];
@@ -73,11 +74,11 @@ const addProfile = async (req, res, next) => {
         show: 'enable',
         Info: {
           name: name,
-          bio: bio,
-          work: work,
+          job: job,
           company: company,
-          position: position,
-          address: address,
+          bio1: bio1,
+          bio2: bio2,
+          bio3: bio3,
           profileImage: profileImage?.location,
           logoImage: logoImage?.location,
         },
@@ -127,11 +128,11 @@ const getInformation = (req, res, next) => {
       return res.status(200).json({
         cardName: info.Profile.name,
         name: info.name,
-        bio: info.bio,
-        work: info.work,
+        job: info.job,
         company: info.company,
-        position: info.position,
-        address: info.address,
+        bio1: info.bio1,
+        bio2: info.bio2,
+        bio3: info.bio3,
         profileImage: info.profileImage,
         logoImage: info.logoImage,
       });
@@ -146,11 +147,11 @@ const updateInformation = async (req, res, next) => {
 
   const cardName = req.body.cardName;
   const name = req.body.name;
-  const bio = req.body.bio;
-  const work = req.body.work;
+  const job = req.body.job;
   const company = req.body.company;
-  const position = req.body.position;
-  const address = req.body.address;
+  const bio1 = req.body.bio1;
+  const bio2 = req.body.bio2;
+  const bio3 = req.body.bio3;
 
   const profileImage = req.files?.['profileImage']?.[0];
   const logoImage = req.files?.['logoImage']?.[0];
@@ -173,11 +174,11 @@ const updateInformation = async (req, res, next) => {
     await db.Info.update(
       {
         name: name,
-        bio: bio,
-        work: work,
+        job: job,
         company: company,
-        position: position,
-        address: address,
+        bio1: bio1,
+        bio2: bio2,
+        bio3: bio3,
         profileImage: profileImage?.location,
         logoImage: logoImage?.location,
       },

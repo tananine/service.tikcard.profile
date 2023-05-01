@@ -21,19 +21,19 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
       },
-      bio: {
-        type: Sequelize.STRING,
-      },
-      work: {
+      job: {
         type: Sequelize.STRING,
       },
       company: {
         type: Sequelize.STRING,
       },
-      position: {
+      bio1: {
         type: Sequelize.STRING,
       },
-      address: {
+      bio2: {
+        type: Sequelize.STRING,
+      },
+      bio3: {
         type: Sequelize.STRING,
       },
       profileImage: {

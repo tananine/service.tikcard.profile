@@ -13,13 +13,13 @@ module.exports = (sequelize, DataTypes) => {
     {
       profileId: DataTypes.INTEGER,
       name: DataTypes.STRING,
-      bio: DataTypes.STRING,
-      work: DataTypes.STRING,
+      job: DataTypes.STRING,
       company: DataTypes.STRING,
-      position: DataTypes.STRING,
-      address: DataTypes.STRING,
+      bio1: DataTypes.STRING,
+      bio2: DataTypes.STRING,
+      bio3: DataTypes.STRING,
       profileImage: DataTypes.STRING,
-      logoImage: DataTypes.STRING
+      logoImage: DataTypes.STRING,
     },
     {
       sequelize,
