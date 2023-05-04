@@ -120,9 +120,14 @@ const getInformation = (req, res, next) => {
   })
     .then((info) => {
       if (!info) {
-        throwError(404, 'ไม่มีข้อมูล Info', {
-          profileId: profileId,
-        });
+        throwError(
+          404,
+          'ไม่มีข้อมูล Info',
+          {
+            profileId: profileId,
+          },
+          false
+        );
       }
 
       return res.status(200).json({

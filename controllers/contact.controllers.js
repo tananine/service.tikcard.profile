@@ -74,9 +74,14 @@ const updateContact = (req, res, next) => {
   )
     .then((isUpdate) => {
       if (!isUpdate[0]) {
-        throwError(400, 'อัพเดทไม่สำเร็จ', {
-          contactId: contactId,
-        });
+        throwError(
+          400,
+          'อัพเดทไม่สำเร็จ',
+          {
+            contactId: contactId,
+          },
+          false
+        );
       }
       return res.status(200).json('อัพเดท Contact สำเร็จ');
     })
@@ -118,10 +123,15 @@ const deleteContact = async (req, res, next) => {
       transaction: transaction,
     }).then((isDestroy) => {
       if (!isDestroy) {
-        throwError(404, 'ไม่พบข้อมูล', {
-          contactId: contactId,
-          profileId: profileId,
-        });
+        throwError(
+          404,
+          'ไม่พบข้อมูล',
+          {
+            contactId: contactId,
+            profileId: profileId,
+          },
+          false
+        );
       }
     });
     transaction.commit();
@@ -138,10 +148,15 @@ const toggleEnable = (req, res, next) => {
   db.Contact.findOne({ where: { id: contactId, profileId: profileId } })
     .then((contact) => {
       if (!contact) {
-        throwError(404, 'ไม่พบข้อมูล', {
-          contactId: contactId,
-          profileId: profileId,
-        });
+        throwError(
+          404,
+          'ไม่พบข้อมูล',
+          {
+            contactId: contactId,
+            profileId: profileId,
+          },
+          false
+        );
       }
       const show = contact.show === 'enable' ? 'disable' : 'enable';
       return db.Contact.update(
@@ -182,11 +197,16 @@ const updateSort = async (req, res, next) => {
     });
 
     if (presentIndex === targetIndex) {
-      throwError(400, 'present เท่ากับ target', {
-        profileId: profileId,
-        contactId: contactId,
-        afterContactId: afterContactId,
-      });
+      throwError(
+        400,
+        'present เท่ากับ target',
+        {
+          profileId: profileId,
+          contactId: contactId,
+          afterContactId: afterContactId,
+        },
+        false
+      );
     }
 
     const updateAfterContactAtPresentIndex = async () => {
@@ -235,10 +255,15 @@ const updateSort = async (req, res, next) => {
     };
 
     if (contactId === afterContactId) {
-      throwError(400, 'ไม่สามารถ Sort ได้', {
-        contactId: contactId,
-        afterContactId: afterContactId,
-      });
+      throwError(
+        400,
+        'ไม่สามารถ Sort ได้',
+        {
+          contactId: contactId,
+          afterContactId: afterContactId,
+        },
+        false
+      );
     }
     await updateAfterContactAtPresentIndex();
     if (targetIndex > -1) {

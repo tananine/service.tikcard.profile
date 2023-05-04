@@ -10,10 +10,15 @@ module.exports = (req, res, next) => {
   })
     .then(async (profile) => {
       if (!profile) {
-        throwError(404, 'ไม่พบข้อมูล', {
-          accountId: accountId,
-          profileId: profileId,
-        });
+        throwError(
+          404,
+          'ไม่พบข้อมูล',
+          {
+            accountId: accountId,
+            profileId: profileId,
+          },
+          false
+        );
       }
       next();
     })

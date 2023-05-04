@@ -13,9 +13,14 @@ exports.getView = async (profileId) => {
   })
     .then((infoData) => {
       if (!infoData) {
-        throwError(404, 'ไม่พบ Info', {
-          profileId: profileId,
-        });
+        throwError(
+          404,
+          'ไม่พบ Info',
+          {
+            profileId: profileId,
+          },
+          false
+        );
       }
       info = infoData;
     })

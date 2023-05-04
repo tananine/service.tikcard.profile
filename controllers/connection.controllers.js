@@ -51,10 +51,15 @@ const deleteConnectList = (req, res, next) => {
   })
     .then((isDestroy) => {
       if (!isDestroy) {
-        throwError(404, 'ไม่พบข้อมูล', {
-          profileId: profileId,
-          connectionId: connectionId,
-        });
+        throwError(
+          404,
+          'ไม่พบข้อมูล',
+          {
+            profileId: profileId,
+            connectionId: connectionId,
+          },
+          false
+        );
       }
       return res.status(200).json({ message: 'ลบสำเร็จ' });
     })

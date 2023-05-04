@@ -21,10 +21,11 @@ app.use('/share', shareRouter);
 app.use('/connection', connectionRouter);
 
 app.use((error, req, res, next) => {
+  const showClientMessage = error.showClientMessage;
   const status = error.statusCode || 500;
   const message = error.message;
   const data = error.data;
-  res.status(status).json({ message: message, data: data });
+  res.status(status).json({ message, data, showClientMessage });
 });
 
 const PORT = process.env.PORT;

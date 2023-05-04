@@ -35,10 +35,15 @@ const setPrimaryProfile = (req, res, next) => {
   )
     .then((isUpdate) => {
       if (!isUpdate[0]) {
-        throwError(400, 'อัพเดทไม่สำเร็จ', {
-          accountId: accountId,
-          profileId: profileId,
-        });
+        throwError(
+          400,
+          'อัพเดทไม่สำเร็จ',
+          {
+            accountId: accountId,
+            profileId: profileId,
+          },
+          false
+        );
       }
       return res.status(200).json({ message: 'อัพเดทสำเร็จ' });
     })
@@ -57,10 +62,15 @@ const setSecondaryProfile = (req, res, next) => {
   )
     .then((isUpdate) => {
       if (!isUpdate[0]) {
-        throwError(400, 'อัพเดทไม่สำเร็จ', {
-          accountId: accountId,
-          profileId: profileId,
-        });
+        throwError(
+          400,
+          'อัพเดทไม่สำเร็จ',
+          {
+            accountId: accountId,
+            profileId: profileId,
+          },
+          false
+        );
       }
       return res.status(200).json({ message: 'อัพเดทสำเร็จ' });
     })

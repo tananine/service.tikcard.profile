@@ -9,13 +9,23 @@ const useLink = async (req, res, next) => {
   await db.Profile.findOne({ where: { linkId: linkId } })
     .then((profile) => {
       if (!profile) {
-        throwError(404, 'ไม่พบ link นี้', {
-          linkId: linkId,
-        });
+        throwError(
+          404,
+          'ไม่พบ link นี้',
+          {
+            linkId: linkId,
+          },
+          false
+        );
       } else if (profile.show !== 'enable') {
-        throwError(403, 'link นี้ไม่สามารถเข้าถึงได้', {
-          linkId: linkId,
-        });
+        throwError(
+          403,
+          'link นี้ไม่สามารถเข้าถึงได้',
+          {
+            linkId: linkId,
+          },
+          false
+        );
       }
       profileId = profile.id;
     })
@@ -40,10 +50,15 @@ const updateLink = (req, res, next) => {
   db.Profile.update({ linkId: linkId }, { where: { id: profileId } })
     .then((isUpdate) => {
       if (!isUpdate[0]) {
-        throwError(400, 'อัพเดทไม่สำเร็จ', {
-          profileId: profileId,
-          linkId: linkId,
-        });
+        throwError(
+          400,
+          'อัพเดทไม่สำเร็จ',
+          {
+            profileId: profileId,
+            linkId: linkId,
+          },
+          false
+        );
       }
       return res.status(200).json({ message: 'อัพเดทสำเร็จ' });
     })
@@ -75,18 +90,28 @@ const getPrimaryLink = (req, res, next) => {
   })
     .then((activation) => {
       if (!activation) {
-        throwError(404, 'ไม่พบข้อมูล', {
-          accountId: accountId,
-        });
+        throwError(
+          404,
+          'ไม่พบข้อมูล',
+          {
+            accountId: accountId,
+          },
+          false
+        );
       }
 
       const linkId = activation.profilePrimary?.linkId;
       if (linkId) {
         return res.status(200).json({ linkId: linkId });
       } else {
-        throwError(404, 'ไม่พบ linkId', {
-          accountId: accountId,
-        });
+        throwError(
+          404,
+          'ไม่พบ linkId',
+          {
+            accountId: accountId,
+          },
+          false
+        );
       }
     })
     .catch((error) => {
@@ -103,18 +128,28 @@ const getSecondaryLink = (req, res, next) => {
   })
     .then((activation) => {
       if (!activation) {
-        throwError(404, 'ไม่พบข้อมูล', {
-          accountId: accountId,
-        });
+        throwError(
+          404,
+          'ไม่พบข้อมูล',
+          {
+            accountId: accountId,
+          },
+          false
+        );
       }
 
       const linkId = activation.profileSecondary?.linkId;
       if (linkId) {
         return res.status(200).json({ linkId: linkId });
       } else {
-        throwError(404, 'ไม่พบ linkId', {
-          accountId: accountId,
-        });
+        throwError(
+          404,
+          'ไม่พบ linkId',
+          {
+            accountId: accountId,
+          },
+          false
+        );
       }
     })
     .catch((error) => {
