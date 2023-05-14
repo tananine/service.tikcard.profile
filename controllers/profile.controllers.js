@@ -132,6 +132,7 @@ const getInformation = (req, res, next) => {
 
       return res.status(200).json({
         cardName: info.Profile.name,
+        coverImage: info.Profile.coverImage,
         name: info.name,
         job: info.job,
         company: info.company,

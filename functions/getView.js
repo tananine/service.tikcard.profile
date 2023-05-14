@@ -10,6 +10,7 @@ exports.getView = async (profileId) => {
 
   await db.Info.findOne({
     where: { profileId: profileId },
+    include: { model: db.Profile, attributes: ['coverImage'] },
   })
     .then((infoData) => {
       if (!infoData) {
