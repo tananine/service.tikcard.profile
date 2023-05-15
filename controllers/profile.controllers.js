@@ -158,6 +158,7 @@ const updateInformation = async (req, res, next) => {
   const bio1 = req.body.bio1;
   const bio2 = req.body.bio2;
   const bio3 = req.body.bio3;
+  const coverImage = req.body.coverImage;
 
   const profileImage = req.files?.['profileImage']?.[0];
   const logoImage = req.files?.['logoImage']?.[0];
@@ -171,6 +172,7 @@ const updateInformation = async (req, res, next) => {
     await db.Profile.update(
       {
         name: cardName,
+        coverImage: coverImage,
       },
       {
         where: { id: profileId },
@@ -190,6 +192,7 @@ const updateInformation = async (req, res, next) => {
       },
       {
         where: { profileId: profileId },
+        include: { model: db.Profile },
         transaction: transaction,
       }
     );
