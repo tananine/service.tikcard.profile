@@ -33,6 +33,9 @@ const addContact = async (req, res, next) => {
   const data = req.body.data;
   const note = req.body.note;
 
+  const latitude = req.body.latitude;
+  const longitude = req.body.longitude;
+
   try {
     const contacts = await getArrayContact(profileId);
     const lastIndexContacts = contacts[contacts.length - 1]?.id || null;
@@ -44,6 +47,8 @@ const addContact = async (req, res, next) => {
       show: 'enable',
       afterContactId: lastIndexContacts,
       note: note,
+      latitude: latitude,
+      longitude: longitude,
     });
     await createContact.save();
     return res.status(200).json('เพิ่มสำเร็จ');
@@ -59,11 +64,16 @@ const updateContact = (req, res, next) => {
   const data = req.body.data;
   const note = req.body.note;
 
+  const latitude = req.body.latitude;
+  const longitude = req.body.longitude;
+
   db.Contact.update(
     {
       name: name,
       data: data,
       note: note,
+      latitude: latitude,
+      longitude: longitude,
     },
     {
       where: {

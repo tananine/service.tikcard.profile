@@ -28,7 +28,10 @@ module.exports = {
         type: Sequelize.STRING,
       },
       typeLayout: {
-        type: Sequelize.ENUM('grid', 'block'),
+        type: Sequelize.ENUM('grid', 'block', 'spacial'),
+      },
+      component: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
       iosUri: DataTypes.STRING,
       example: DataTypes.STRING,
       imageIcon: DataTypes.STRING,
-      typeLayout: DataTypes.ENUM('grid', 'block'),
+      typeLayout: DataTypes.ENUM('grid', 'block', 'spacial'),
+      component: DataTypes.STRING,
     },
     {
       sequelize,

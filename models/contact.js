@@ -25,6 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       show: DataTypes.ENUM('enable', 'disable'),
       afterContactId: DataTypes.INTEGER,
       note: DataTypes.STRING,
+      latitude: DataTypes.FLOAT,
+      longitude: DataTypes.FLOAT,
     },
     {
       sequelize,
