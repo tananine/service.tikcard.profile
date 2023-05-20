@@ -133,6 +133,7 @@ const getInformation = (req, res, next) => {
       return res.status(200).json({
         cardName: info.Profile.name,
         coverImage: info.Profile.coverImage,
+        colorCoverImage: info.Profile.colorCoverImage,
         name: info.name,
         job: info.job,
         company: info.company,
@@ -159,6 +160,7 @@ const updateInformation = async (req, res, next) => {
   const bio2 = req.body.bio2;
   const bio3 = req.body.bio3;
   const coverImage = req.body.coverImage;
+  const colorCoverImage = req.body.colorCoverImage;
 
   const profileImage = req.files?.['profileImage']?.[0];
   const logoImage = req.files?.['logoImage']?.[0];
@@ -173,6 +175,7 @@ const updateInformation = async (req, res, next) => {
       {
         name: cardName,
         coverImage: coverImage,
+        colorCoverImage: colorCoverImage,
       },
       {
         where: { id: profileId },

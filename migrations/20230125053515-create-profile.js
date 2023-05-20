@@ -22,7 +22,10 @@ module.exports = {
         type: Sequelize.ENUM('enable', 'disable'),
       },
       coverImage: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+      },
+      colorCoverImage: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
