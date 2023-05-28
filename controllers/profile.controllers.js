@@ -70,6 +70,8 @@ const addProfile = async (req, res, next) => {
       {
         accountId: accountId,
         name: cardName,
+        coverImage: 1,
+        colorCoverImage: 1,
         linkId: linkIdGenerate,
         show: 'enable',
         Info: {
