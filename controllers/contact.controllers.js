@@ -5,7 +5,7 @@ const {
 } = require('../functions/getArrayContact');
 const db = require('../models/index');
 
-const getContactList = (req, res, next) => {
+const getAllContactAppList = (req, res, next) => {
   db.ContactItem.findAll()
     .then((items) => {
       return res.status(200).json(items);
@@ -290,7 +290,7 @@ const updateSort = async (req, res, next) => {
 };
 
 module.exports = {
-  getContactList,
+  getAllContactAppList,
   getMyContact,
   addContact,
   updateContact,
