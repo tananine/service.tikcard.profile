@@ -53,13 +53,13 @@ router.delete(
   profileControllers.removeProfile
 );
 router.get(
-  '/Information',
+  '/information',
   authen,
   validateProfile,
   profileControllers.getInformation
 );
 router.put(
-  '/Information',
+  '/information',
   authen,
   validateProfile,
   upload.fields([
