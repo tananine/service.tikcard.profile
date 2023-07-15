@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const { throwError } = require('../functions/throwError');
 const randomKey = require('random-key');
 const db = require('../models/index');
@@ -33,27 +34,32 @@ const getProfileSoft = (req, res, next) => {
 };
 
 const addProfile = async (req, res, next) => {
-  const accountId = req.account.id;
-
-  const cardName = req.body.cardName || '';
-  const name = req.body.name || '';
-  const job = req.body.job || '';
-  const company = req.body.company || '';
-  const bio1 = req.body.bio1 || '';
-  const bio2 = req.body.bio2 || '';
-  const bio3 = req.body.bio3 || '';
-
-  const profileImage = req.files?.['profileImage']?.[0];
-  const logoImage = req.files?.['logoImage']?.[0];
-
-  const randomKeyHandler = () => {
-    return randomKey.generate(7);
-  };
-
-  let linkIdGenerate = randomKeyHandler();
-  let linkIdInUse = false;
-
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      throwError(400, errors.array()[0].msg, errors.array(), true);
+    }
+
+    const accountId = req.account.id;
+
+    const cardName = req.body.cardName || '';
+    const name = req.body.name || '';
+    const job = req.body.job || '';
+    const company = req.body.company || '';
+    const bio1 = req.body.bio1 || '';
+    const bio2 = req.body.bio2 || '';
+    const bio3 = req.body.bio3 || '';
+
+    const profileImage = req.files?.['profileImage']?.[0];
+    const logoImage = req.files?.['logoImage']?.[0];
+
+    const randomKeyHandler = () => {
+      return randomKey.generate(10);
+    };
+
+    let linkIdGenerate = randomKeyHandler().toLowerCase();
+    let linkIdInUse = false;
+
     do {
       linkIdInUse = false;
       await db.Profile.findOne({ where: { linkId: linkIdGenerate } }).then(

@@ -3,6 +3,8 @@ const profileControllers = require('../controllers/profile.controllers');
 const authen = require('../middleware/authen');
 const validateProfile = require('../middleware/validateProfile');
 
+const { body } = require('express-validator');
+
 const router = express.Router();
 
 const AWS = require('aws-sdk');
@@ -12,6 +14,8 @@ const s3 = new AWS.S3({
   secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
   endpoint: process.env.S3_ENDPOINT,
 });
+
+const whitelist = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
 
 const multer = require('multer');
 const multerS3 = require('multer-s3');
@@ -34,6 +38,12 @@ const upload = multer({
       }
     },
   }),
+  fileFilter: (req, file, cb) => {
+    if (!whitelist.includes(file.mimetype)) {
+      return cb(new Error('File is not allowed'));
+    }
+    cb(null, true);
+  },
 });
 
 router.get('/', authen, profileControllers.getProfileSoft);
@@ -44,6 +54,14 @@ router.post(
     { name: 'profileImage', maxCount: 1 },
     { name: 'logoImage', maxCount: 1 },
   ]),
+  [
+    body('cardName')
+      .trim()
+      .notEmpty()
+      .withMessage('โปรดป้อนชื่อเรียกนามบัตร')
+      .isLength({ max: 50 })
+      .withMessage('ต้องมีความยาวไม่เกิน 50 อักขระ'),
+  ],
   profileControllers.addProfile
 );
 router.delete(

@@ -45,7 +45,7 @@ const useLink = async (req, res, next) => {
 
 const updateLink = (req, res, next) => {
   const profileId = req.headers.profile;
-  const linkId = req.body.linkId;
+  const linkId = req.body.linkId.toLowerCase();
 
   db.Profile.update({ linkId: linkId }, { where: { id: profileId } })
     .then((isUpdate) => {
