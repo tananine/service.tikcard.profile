@@ -61,6 +61,30 @@ router.post(
       .withMessage('โปรดป้อนชื่อเรียกนามบัตร')
       .isLength({ max: 50 })
       .withMessage('ต้องมีความยาวไม่เกิน 50 อักขระ'),
+    body('name')
+      .trim()
+      .isLength({ max: 50 })
+      .withMessage('ต้องมีความยาวไม่เกิน 50 อักขระ'),
+    body('job')
+      .trim()
+      .isLength({ max: 50 })
+      .withMessage('ต้องมีความยาวไม่เกิน 50 อักขระ'),
+    body('company')
+      .trim()
+      .isLength({ max: 50 })
+      .withMessage('ต้องมีความยาวไม่เกิน 50 อักขระ'),
+    body('bio1')
+      .trim()
+      .isLength({ max: 80 })
+      .withMessage('ต้องมีความยาวไม่เกิน 80 อักขระ'),
+    body('bio2')
+      .trim()
+      .isLength({ max: 80 })
+      .withMessage('ต้องมีความยาวไม่เกิน 80 อักขระ'),
+    body('bio3')
+      .trim()
+      .isLength({ max: 80 })
+      .withMessage('ต้องมีความยาวไม่เกิน 80 อักขระ'),
   ],
   profileControllers.addProfile
 );
@@ -84,6 +108,38 @@ router.put(
     { name: 'profileImage', maxCount: 1 },
     { name: 'logoImage', maxCount: 1 },
   ]),
+  [
+    body('cardName')
+      .trim()
+      .notEmpty()
+      .withMessage('โปรดป้อนชื่อเรียกนามบัตร')
+      .isLength({ max: 50 })
+      .withMessage('ต้องมีความยาวไม่เกิน 50 อักขระ'),
+    body('name')
+      .trim()
+      .isLength({ max: 50 })
+      .withMessage('ต้องมีความยาวไม่เกิน 50 อักขระ'),
+    body('job')
+      .trim()
+      .isLength({ max: 50 })
+      .withMessage('ต้องมีความยาวไม่เกิน 50 อักขระ'),
+    body('company')
+      .trim()
+      .isLength({ max: 50 })
+      .withMessage('ต้องมีความยาวไม่เกิน 50 อักขระ'),
+    body('bio1')
+      .trim()
+      .isLength({ max: 80 })
+      .withMessage('ต้องมีความยาวไม่เกิน 80 อักขระ'),
+    body('bio2')
+      .trim()
+      .isLength({ max: 80 })
+      .withMessage('ต้องมีความยาวไม่เกิน 80 อักขระ'),
+    body('bio3')
+      .trim()
+      .isLength({ max: 80 })
+      .withMessage('ต้องมีความยาวไม่เกิน 80 อักขระ'),
+  ],
   profileControllers.updateInformation
 );
 
