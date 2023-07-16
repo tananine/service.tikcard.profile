@@ -1,14 +1,20 @@
+const { validationResult } = require('express-validator');
 const { throwError } = require('../functions/throwError');
 const db = require('../models/index');
 
 const sendContact = async (req, res, next) => {
-  const profileId = req.body.profileId;
-  const name = req.body.name;
-  const phone = req.body.phone || null;
-  const email = req.body.email;
-  const message = req.body.message;
-
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      throwError(400, errors.array()[0].msg, errors.array(), true);
+    }
+
+    const profileId = req.body.profileId;
+    const name = req.body.name;
+    const phone = req.body.phone || null;
+    const email = req.body.email;
+    const message = req.body.message;
+
     const createConnection = await db.Connection.create({
       profileId: profileId,
       name: name,
