@@ -19,6 +19,7 @@ router.post(
     body('phone')
       .trim()
       .isInt()
+      .optional({ nullable: true })
       .withMessage('เบอร์โทรต้องเป็นตัวเลข')
       .isLength({ max: 10 })
       .withMessage('เบอร์โทรต้องมีความยาวไม่เกิน 10'),

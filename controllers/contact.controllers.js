@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const { throwError } = require('../functions/throwError');
 const {
   getArrayContact,
@@ -27,16 +28,21 @@ const getMyContact = async (req, res, next) => {
 };
 
 const addContact = async (req, res, next) => {
-  const profileId = req.headers.profile;
-  const contactItemId = req.body.contactItemId;
-  const name = req.body.name;
-  const data = req.body.data;
-  const note = req.body.note;
-
-  const latitude = req.body.latitude;
-  const longitude = req.body.longitude;
-
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      throwError(400, errors.array()[0].msg, errors.array(), true);
+    }
+
+    const profileId = req.headers.profile;
+    const contactItemId = req.body.contactItemId;
+    const name = req.body.name;
+    const data = req.body.data;
+    const note = req.body.note;
+
+    const latitude = req.body.latitude;
+    const longitude = req.body.longitude;
+
     const contacts = await getArrayContact(profileId);
     const lastIndexContacts = contacts[contacts.length - 1]?.id || null;
     const createContact = await db.Contact.create({
