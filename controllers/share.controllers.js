@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const { throwError } = require('../functions/throwError');
 const { getView } = require('../functions/getView');
 const db = require('../models/index');
@@ -44,8 +45,13 @@ const useLink = async (req, res, next) => {
 };
 
 const updateLink = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    throwError(400, errors.array()[0].msg, errors.array(), true);
+  }
+
   const profileId = req.headers.profile;
-  const linkId = req.body.linkId.toLowerCase();
+  const linkId = req.body.linkId;
 
   db.Profile.update({ linkId: linkId }, { where: { id: profileId } })
     .then((isUpdate) => {
