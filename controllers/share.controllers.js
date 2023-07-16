@@ -53,6 +53,16 @@ const updateLink = (req, res, next) => {
   const profileId = req.headers.profile;
   const linkId = req.body.linkId;
 
+  db.Profile.findOne({ where: { linkId: linkId } })
+    .then((profile) => {
+      if (profile) {
+        throwError(400, 'link ID นี้ถูกใช้งานแล้ว', { linkId: linkId }, true);
+      }
+    })
+    .catch((error) => {
+      next(error);
+    });
+
   db.Profile.update({ linkId: linkId }, { where: { id: profileId } })
     .then((isUpdate) => {
       if (!isUpdate[0]) {
