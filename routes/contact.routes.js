@@ -34,10 +34,12 @@ router.post(
     body('latitude')
       .trim()
       .isFloat({ min: -190, max: 190 })
+      .optional({ nullable: true })
       .withMessage('latitude ต้องเป็น -190 ถึง 190 เท่านั้น'),
     body('longitude')
       .trim()
       .isFloat({ min: -190, max: 190 })
+      .optional({ nullable: true })
       .withMessage('longitude ต้องเป็น -190 ถึง 190 เท่านั้น'),
   ],
   contactControllers.addContact
@@ -64,10 +66,12 @@ router.put(
     body('latitude')
       .trim()
       .isFloat({ min: -190, max: 190 })
+      .optional({ nullable: true })
       .withMessage('latitude ต้องไม่เกิน -190 ถึง 190'),
     body('longitude')
       .trim()
       .isFloat({ min: -190, max: 190 })
+      .optional({ nullable: true })
       .withMessage('longitude ต้องไม่เกิน -190 ถึง 190'),
   ],
   contactControllers.updateContact
