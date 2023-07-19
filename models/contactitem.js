@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       imageIcon: DataTypes.STRING,
       typeLayout: DataTypes.ENUM('grid', 'block', 'spacial'),
       component: DataTypes.STRING,
+      type: DataTypes.STRING,
     },
     {
       sequelize,
