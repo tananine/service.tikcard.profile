@@ -18,8 +18,8 @@ router.post(
       .toLowerCase()
       .notEmpty()
       .withMessage('โปรดป้อนข้อมูล')
-      .isLength({ min: 4, max: 18 })
-      .withMessage('ต้องมีความยาว 4 ถึง 18 อักขระ')
+      .isLength({ min: 4, max: 12 })
+      .withMessage('ต้องมีความยาว 4 ถึง 12 อักขระ')
       .matches('^[A-Za-z0-9_]+$')
       .withMessage('ต้องเป็นอักษร a-z , 0-9 หรือ _ (Apostrophe)'),
   ],
