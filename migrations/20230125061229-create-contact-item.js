@@ -34,6 +34,9 @@ module.exports = {
         type: Sequelize.STRING,
       },
       type: {
+        type: Sequelize.ENUM('number', 'email', 'link'),
+      },
+      inputType: {
         type: Sequelize.STRING,
       },
       createdAt: {
