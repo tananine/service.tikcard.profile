@@ -7,7 +7,9 @@ const {
 const db = require('../models/index');
 
 const getAllContactAppList = (req, res, next) => {
-  db.ContactItem.findAll()
+  db.ContactItem.findAll({
+    order: [['id', 'ASC']],
+  })
     .then((items) => {
       return res.status(200).json(items);
     })
