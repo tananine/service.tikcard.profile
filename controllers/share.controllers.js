@@ -125,6 +125,7 @@ const getPrimaryLink = (req, res, next) => {
           'ไม่พบ linkId',
           {
             accountId: accountId,
+            noProfile: true,
           },
           false
         );
@@ -158,14 +159,7 @@ const getSecondaryLink = (req, res, next) => {
       if (linkId) {
         return res.status(200).json({ linkId: linkId });
       } else {
-        throwError(
-          404,
-          'ไม่พบ linkId',
-          {
-            accountId: accountId,
-          },
-          false
-        );
+        getPrimaryLink(req, res, next);
       }
     })
     .catch((error) => {
