@@ -18,8 +18,6 @@ router.post(
       .withMessage('ชื่อต้องมีความยาวไม่เกิน 50 อักขระ'),
     body('phone')
       .trim()
-      .notEmpty()
-      .withMessage('โปรดป้อนข้อมูล')
       .isLength({ max: 25 })
       .withMessage('เบอร์โทรต้องมีความยาวไม่เกิน 25'),
     body('email')
