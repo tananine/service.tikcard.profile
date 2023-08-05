@@ -54,7 +54,7 @@ const addProfile = async (req, res, next) => {
     const logoImage = req.files?.['logoImage']?.[0];
 
     const randomKeyHandler = () => {
-      return randomKey.generate(12);
+      return randomKey.generate(6);
     };
 
     let linkIdGenerate = randomKeyHandler().toLowerCase();
