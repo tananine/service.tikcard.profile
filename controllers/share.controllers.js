@@ -111,6 +111,7 @@ const getPrimaryLink = (req, res, next) => {
           'ไม่พบข้อมูล',
           {
             accountId: accountId,
+            noProfile: true,
           },
           false
         );
