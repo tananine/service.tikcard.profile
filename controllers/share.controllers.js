@@ -58,25 +58,22 @@ const updateLink = (req, res, next) => {
       if (profile) {
         throwError(400, 'link ID นี้ถูกใช้งานแล้ว', { linkId: linkId }, true);
       }
-    })
-    .catch((error) => {
-      next(error);
-    });
-
-  db.Profile.update({ linkId: linkId }, { where: { id: profileId } })
-    .then((isUpdate) => {
-      if (!isUpdate[0]) {
-        throwError(
-          400,
-          'อัพเดทไม่สำเร็จ',
-          {
-            profileId: profileId,
-            linkId: linkId,
-          },
-          false
-        );
-      }
-      return res.status(200).json({ message: 'อัพเดทสำเร็จ' });
+      db.Profile.update({ linkId: linkId }, { where: { id: profileId } }).then(
+        (isUpdate) => {
+          if (!isUpdate[0]) {
+            throwError(
+              400,
+              'อัพเดทไม่สำเร็จ',
+              {
+                profileId: profileId,
+                linkId: linkId,
+              },
+              false
+            );
+          }
+          return res.status(200).json({ message: 'อัพเดทสำเร็จ' });
+        }
+      );
     })
     .catch((error) => {
       next(error);
